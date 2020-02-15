@@ -10,6 +10,7 @@
 		"type=volume,source=dev-sandbox-extensions,destination=/root/.vscode-server/extensions",
 		"type=volume,source=dev-sandbox-powershell,destination=/root/.local/share/powershell",
 		"type=volume,source=dev-sandbox-powershell-profile,destination=/root/.config/powershell",
+		"type=bind,source=/,destination=/host"
 	],
 
 	"workspaceFolder": "/workspaces",
