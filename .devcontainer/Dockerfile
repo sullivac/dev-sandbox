@@ -64,6 +64,6 @@ COPY powershell/ /root/.config/powershell/
 RUN chmod -R -x /root/.local/share/powershell/Scripts/*.ps1 \
     && chmod -R -x /root/.config/powershell/*.ps1
 
-VOLUME [ "/root/.vscode-server/extensions", "/root/.local/share/powershell", "/root/.config/powershell" ]
+VOLUME [ "/root/.vscode-server/extensions", "/root/.local/share/powershell", "/root/.config/powershell", "/workspaces" ]
 
 ENV DEBIAN_FRONTEND=dialog
