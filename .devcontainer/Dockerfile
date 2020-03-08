@@ -43,7 +43,7 @@ RUN apt-get update 2>&1 \
     && apt-get install -y docker-ce-cli 2>&1 \
     #
     # Install PowerShell
-    && curl -sSL -o /tmp/powershell.deb https://github.com/PowerShell/PowerShell/releases/download/v6.2.4/powershell_6.2.4-1.ubuntu.18.04_amd64.deb 2>&1 \
+    && curl -sSL -o /tmp/powershell.deb https://github.com/PowerShell/PowerShell/releases/download/v7.0.0/powershell_7.0.0-1.ubuntu.18.04_amd64.deb 2>&1 \
     && dpkg -i --force-all /tmp/powershell.deb 2>&1 \
     && apt-get install -yf 2>&1 \
     && rm -rf /tmp/powershell.deb 2>&1 \
