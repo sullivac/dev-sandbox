@@ -5,12 +5,16 @@
 
 	"dockerFile": "Dockerfile",
 
+	"remoteEnv": {
+		"SYNC_LOCALHOST_KUBECONFIG": "true"
+	},
+
 	"mounts": [
 		"source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
 		"type=volume,source=dev-sandbox-extensions,destination=/root/.vscode-server/extensions",
 		"type=volume,source=dev-sandbox-powershell,destination=/root/.local/share/powershell",
-		"type=volume,source=dev-sandbox-powershell-profile,destination=/root/.config/powershell",
-		"type=bind,source=/,destination=/host"
+		"type=bind,source=/,destination=/host",
+		"type=bind,source=${env:HOME}${env:USERPROFILE}/.kube,target=/root/.kube-localhost"
 	],
 
 	"workspaceFolder": "/workspaces",
@@ -34,6 +38,7 @@
 		"chenxsan.vscode-standardjs",
 		"vscode-icons-team.vscode-icons",
 		"redhat.vscode-yaml",
-		"dotjoshjohnson.xml"
+		"dotjoshjohnson.xml",
+		"ms-kubernetes-tools.vscode-kubernetes-tools"
 	]
 }

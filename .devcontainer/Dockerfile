@@ -14,6 +14,7 @@ RUN apt-get update 2>&1 \
     gnupg-agent \
     lsb-release \
     procps \
+    sed \
     software-properties-common \
     unzip 2>&1 \
     #
@@ -42,6 +43,11 @@ RUN apt-get update 2>&1 \
     && apt-get update 2>&1 \
     && apt-get install -y docker-ce-cli 2>&1 \
     #
+    # Install kubectl
+    && curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.17.0/bin/linux/amd64/kubectl 2>&1 \
+    && chmod +x ./kubectl 2>&1 \
+    && mv ./kubectl /usr/local/bin 2>&1 \
+    #
     # Install PowerShell
     && curl -sSL -o /tmp/powershell.deb https://github.com/PowerShell/PowerShell/releases/download/v7.0.0/powershell_7.0.0-1.ubuntu.18.04_amd64.deb 2>&1 \
     && dpkg -i --force-all /tmp/powershell.deb 2>&1 \
@@ -53,17 +59,18 @@ RUN apt-get update 2>&1 \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
+RUN mkdir -p /root/.local/share/powershell/Scripts 2>&1
+
 COPY Install-Modules.ps1 /root/.local/share/powershell/Scripts/
 
-RUN mkdir -p /root/.local/share/powershell 2>&1 \
-    && mkdir -p /root/.local/share/powershell/Scripts 2>&1 \
-    && pwsh -NonInteractive -C "& { /root/.local/share/powershell/Scripts/Install-Modules.ps1 }" 2>&1
+RUN pwsh -NoProfile -NonInteractive -C "& { /root/.local/share/powershell/Scripts/Install-Modules.ps1 }" 2>&1 \
+    && mkdir -p /root/.config/powershell 2>&1
 
 COPY powershell/ /root/.config/powershell/
 
 RUN chmod -R -x /root/.local/share/powershell/Scripts/*.ps1 \
     && chmod -R -x /root/.config/powershell/*.ps1
 
-VOLUME [ "/root/.vscode-server/extensions", "/root/.local/share/powershell", "/root/.config/powershell", "/workspaces" ]
+VOLUME [ "/root/.vscode-server/extensions", "/root/.local/share/powershell", "/workspaces" ]
 
 ENV DEBIAN_FRONTEND=dialog
