@@ -13,3 +13,5 @@ if ($env:SYNC_LOCALHOST_KUBECONFIG) {
     $kubeConfigPath = $kubePath | Join-Path -ChildPath config
     sed -i -e "s/localhost/host.docker.internal/g" $kubeConfigPath
 }
+
+git config --global core.editor "code --wait"
