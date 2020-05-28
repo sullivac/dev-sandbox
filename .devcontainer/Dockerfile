@@ -49,7 +49,7 @@ RUN apt-get update 2>&1 \
     && mv ./kubectl /usr/local/bin 2>&1 \
     #
     # Install PowerShell
-    && curl -sSL -o /tmp/powershell.deb https://github.com/PowerShell/PowerShell/releases/download/v7.0.0/powershell_7.0.0-1.ubuntu.18.04_amd64.deb 2>&1 \
+    && curl -sSL -o /tmp/powershell.deb https://github.com/PowerShell/PowerShell/releases/download/v7.0.1/powershell_7.0.1-1.ubuntu.18.04_amd64.deb 2>&1 \
     && dpkg -i --force-all /tmp/powershell.deb 2>&1 \
     && apt-get install -yf 2>&1 \
     && rm -rf /tmp/powershell.deb 2>&1 \
