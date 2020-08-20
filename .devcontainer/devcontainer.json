@@ -14,7 +14,8 @@
 		"type=volume,source=dev-sandbox-extensions,destination=/root/.vscode-server/extensions",
 		"type=volume,source=dev-sandbox-powershell,destination=/root/.local/share/powershell",
 		"type=volume,source=dev-sandbox-node-modules,destination=/root/.nvm/versions/node/v12.18.1/lib/node_modules",
-		"type=bind,source=${localEnv:HOME}/.kube,target=/root/.kube-localhost"
+		"type=bind,source=${localEnv:HOME}/.kube,target=/root/.kube-localhost",
+		"type=bind,source=${localEnv:HOME}/.ssh,target=/root/.ssh"
 	],
 
 	"workspaceFolder": "/workspaces",
