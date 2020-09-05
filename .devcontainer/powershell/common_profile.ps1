@@ -15,18 +15,3 @@ if ($env:SYNC_LOCALHOST_KUBECONFIG) {
 }
 
 git config --global core.editor "code --wait"
-
-$keychainResult = & keychain --eval --agents ssh github_ed25519
-
-$keychainResult |
-ForEach-Object -Process { $_ -split ';' } |
-Where-Object -FilterScript { $_.StartsWith("SSH") } |
-ForEach-Object -Process {
-    $tokens = $_ -split '='
-
-    $envVarPath = Join-Path -Path env: -ChildPath $tokens[0]
-
-    if (-not $(Test-Path -Path $envVarPath)) {
-        New-Item -Path env:\ -Name $tokens[0] -Value $tokens[1] | Out-Null
-    }
-}

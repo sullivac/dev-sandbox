@@ -12,7 +12,6 @@ RUN apt-get update 2>&1 \
     curl \
     git \
     gnupg-agent \
-    keychain \
     lsb-release \
     procps \
     sed \
