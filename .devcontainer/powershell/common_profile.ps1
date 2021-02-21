@@ -1,6 +1,7 @@
 Import-Module -Name DockerCompletion
 Import-Module -Name posh-git
 
+$env:JAVA_HOME = "/usr/lib/jvm/java-11-openjdk-amd64"
 $env:PATH = "${env:PATH}:/root/.nvm/versions/node/v12.18.1/bin"
 
 Set-PSReadLineOption -EditMode Windows

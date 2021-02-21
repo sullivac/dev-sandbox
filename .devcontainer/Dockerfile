@@ -30,11 +30,14 @@ RUN apt-get update 2>&1 \
     && ln -s /usr/bin/python3 /usr/bin/python \
     && ln -s /usr/bin/pip3 /usr/bin/pip \
     #
-    # Install .NET Core 3.1
+    # Install OpenJDK 11
+    && apt-get install -y openjdk-11-jdk \
+    #
+    # Install .NET 5.0
     && curl -sSL https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -o /tmp/packages-microsoft-prod.deb 2>&1 \
     && dpkg -i /tmp/packages-microsoft-prod.deb 2>&1 \
     && apt-get update 2>&1 \
-    && apt-get install -y dotnet-sdk-3.1 \
+    && apt-get install -y dotnet-sdk-5.0 \
     && rm -rf /tmp/packages-microsoft-prod.deb 2>&1 \
     #
     # Install Docker CE CLI
@@ -49,7 +52,7 @@ RUN apt-get update 2>&1 \
     && mv ./kubectl /usr/local/bin 2>&1 \
     #
     # Install PowerShell
-    && curl -sSL -o /tmp/powershell.deb https://github.com/PowerShell/PowerShell/releases/download/v7.0.3/powershell_7.0.3-1.ubuntu.18.04_amd64.deb 2>&1 \
+    && curl -sSL -o /tmp/powershell.deb https://github.com/PowerShell/PowerShell/releases/download/v7.1.2/powershell_7.1.2-1.ubuntu.18.04_amd64.deb 2>&1 \
     && dpkg -i --force-all /tmp/powershell.deb 2>&1 \
     && apt-get install -yf 2>&1 \
     && rm -rf /tmp/powershell.deb 2>&1 \
