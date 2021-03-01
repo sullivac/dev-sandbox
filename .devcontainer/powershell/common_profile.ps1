@@ -2,7 +2,13 @@ Import-Module -Name DockerCompletion
 Import-Module -Name posh-git
 
 $env:JAVA_HOME = "/usr/lib/jvm/java-11-openjdk-amd64"
-$env:PATH = "${env:PATH}:/root/.nvm/versions/node/v12.18.1/bin"
+
+$paths = @(
+    '/root/.nvm/versions/node/v12.18.1/bin',
+    '/opt/gradle/gradle-6.8.3/bin'
+) -join ':'
+
+$env:PATH = "${env:PATH}:$paths"
 
 Set-PSReadLineOption -EditMode Windows
 

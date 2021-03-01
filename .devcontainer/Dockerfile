@@ -33,6 +33,12 @@ RUN apt-get update 2>&1 \
     # Install OpenJDK 11
     && apt-get install -y openjdk-11-jdk \
     #
+    # Install Gradle 6.8.3
+    && curl -o gradle.zip https://downloads.gradle-dn.com/distributions/gradle-6.8.3-all.zip \
+    && mkdir /opt/gradle \
+    && unzip -d /opt/gradle gradle.zip \
+    && rm gradle.zip \
+    #
     # Install .NET 5.0
     && curl -sSL https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -o /tmp/packages-microsoft-prod.deb 2>&1 \
     && dpkg -i /tmp/packages-microsoft-prod.deb 2>&1 \
