@@ -19,11 +19,6 @@ RUN sed -i -e 's/http:\/\/archive\.ubuntu\.com\/ubuntu\//mirror:\/\/mirrors\.ubu
     software-properties-common \
     unzip 2>&1 \
     #
-    # Update git to the latest
-    && add-apt-repository ppa:git-core/ppa \
-    && apt-get update \
-    && apt-get install git \
-    #
     # Install Node.js 12.18.1 with nvm
     && curl -so- https://raw.githubusercontent.com/creationix/nvm/v0.35.2/install.sh | bash 2>&1 \
     && /bin/bash -c "source $HOME/.nvm/nvm.sh \
