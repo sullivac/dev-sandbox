@@ -23,7 +23,8 @@ RUN apt-get update 2>&1 \
     # Install Node.js 12.18.1 with nvm
     && curl -so- https://raw.githubusercontent.com/creationix/nvm/v0.35.2/install.sh | bash 2>&1 \
     && /bin/bash -c "source $HOME/.nvm/nvm.sh \
-    && nvm install 14.16.0" 2>&1 \
+    && nvm install 14.16.0 \
+    && npm install -g npm npm-check-updates" 2>&1 \
     #
     # Install python3
     && apt-get install -y \
@@ -82,6 +83,6 @@ COPY powershell/ /root/.config/powershell/
 RUN chmod -R -x /root/.local/share/powershell/Scripts/*.ps1 \
     && chmod -R -x /root/.config/powershell/*.ps1
 
-VOLUME [ "/root/.vscode-server/extensions", "/root/.local/share/powershell", "/root/.nvm/versions/node/v14.16.0/lib/node_modules", "/root/.googleapis", "/workspaces" ]
+VOLUME [ "/root/.vscode-server/extensions", "/root/.local/share/powershell", "/root/.googleapis", "/workspaces" ]
 
 ENV DEBIAN_FRONTEND=dialog

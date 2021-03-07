@@ -13,7 +13,6 @@
 		"source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
 		"type=volume,source=dev-sandbox-extensions,destination=/root/.vscode-server/extensions",
 		"type=volume,source=dev-sandbox-powershell,destination=/root/.local/share/powershell",
-		"type=volume,source=dev-sandbox-node-modules,destination=/root/.nvm/versions/node/v14.16.0/lib/node_modules",
 		"type=volume,source=dev-sandbox-google-apis,destination=/root/.googleapis",
 		"type=bind,source=${localEnv:HOME}/.kube,target=/root/.kube-localhost",
 	],
