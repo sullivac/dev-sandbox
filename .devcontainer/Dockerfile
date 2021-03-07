@@ -10,6 +10,7 @@ RUN sed -i -e 's/http:\/\/archive\.ubuntu\.com\/ubuntu\//mirror:\/\/mirrors\.ubu
     && apt-get install -y \
     apt-transport-https \
     ca-certificates \
+    && apt-get install -y \
     curl \
     git \
     gnupg-agent \
