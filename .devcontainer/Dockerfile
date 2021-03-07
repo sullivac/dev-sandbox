@@ -2,9 +2,8 @@ FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN sed -i -e 's/http:\/\/archive\.ubuntu\.com\/ubuntu\//mirror:\/\/mirrors\.ubuntu\.com\/mirrors\.txt/' /etc/apt/sources.list
-
-RUN apt-get update 2>&1 \
+RUN sed -i -e 's/http:\/\/archive\.ubuntu\.com\/ubuntu\//mirror:\/\/mirrors\.ubuntu\.com\/mirrors\.txt/' /etc/apt/sources.list \
+    && apt-get update 2>&1 \
     && apt-get -y install --no-install-recommends \
     apt-utils \
     dialog 2>&1 \
@@ -84,9 +83,6 @@ RUN pwsh -NoProfile -NonInteractive -C "& { /root/.local/share/powershell/Script
     && mkdir -p /root/.config/powershell 2>&1
 
 COPY powershell/ /root/.config/powershell/
-
-RUN chmod -R -x /root/.local/share/powershell/Scripts/*.ps1 \
-    && chmod -R -x /root/.config/powershell/*.ps1
 
 VOLUME [ "/root/.vscode-server/extensions", "/root/.local/share/powershell", "/root/.googleapis", "/workspaces" ]
 
