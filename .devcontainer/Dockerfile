@@ -64,7 +64,7 @@ RUN sed -i -e 's/http:\/\/archive\.ubuntu\.com\/ubuntu\//mirror:\/\/mirrors\.ubu
     && mv ./kubectl /usr/local/bin 2>&1 \
     #
     # Install PowerShell
-    && curl -sSL -o /tmp/powershell.deb https://github.com/PowerShell/PowerShell/releases/download/v7.1.2/powershell_7.1.2-1.ubuntu.20.04_amd64.deb 2>&1 \
+    && curl -sSL -o /tmp/powershell.deb https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/powershell_7.1.3-1.ubuntu.20.04_amd64.deb 2>&1 \
     && dpkg -i --force-all /tmp/powershell.deb 2>&1 \
     && apt-get install -yf 2>&1 \
     && rm -rf /tmp/powershell.deb 2>&1 \
