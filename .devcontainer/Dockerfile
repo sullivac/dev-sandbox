@@ -2,7 +2,7 @@ FROM ubuntu:focal
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN sed -i -e 's/http:\/\/archive\.ubuntu\.com\/ubuntu\//mirror:\/\/mirrors\.ubuntu\.com\/mirrors\.txt/' /etc/apt/sources.list \
+RUN sed -i -e 's/http:\/\/archive\.ubuntu\.com\/ubuntu\//http:\/\/ubuntu.mirrors.tds.net\/pub\/ubuntu\//' /etc/apt/sources.list \
     && apt-get update 2>&1 \
     && apt-get -y install --no-install-recommends \
     apt-utils \
@@ -13,11 +13,13 @@ RUN sed -i -e 's/http:\/\/archive\.ubuntu\.com\/ubuntu\//mirror:\/\/mirrors\.ubu
     && apt-get install -y \
     curl \
     gnupg-agent \
+    liblttng-ust0 \
     lsb-release \
     procps \
     sed \
     software-properties-common \
     unzip 2>&1 \
+    && apt-get upgrade -y 2>&1 \
     #
     # Update Git
     && add-apt-repository ppa:git-core/ppa 2>&1 \
@@ -64,10 +66,12 @@ RUN sed -i -e 's/http:\/\/archive\.ubuntu\.com\/ubuntu\//mirror:\/\/mirrors\.ubu
     && mv ./kubectl /usr/local/bin 2>&1 \
     #
     # Install PowerShell
-    && curl -sSL -o /tmp/powershell.deb https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/powershell_7.1.3-1.ubuntu.20.04_amd64.deb 2>&1 \
-    && dpkg -i --force-all /tmp/powershell.deb 2>&1 \
-    && apt-get install -yf 2>&1 \
-    && rm -rf /tmp/powershell.deb 2>&1 \
+    && curl -sSL -o /tmp/packages-microsoft-prod.deb https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb 2>&1 \
+    && dpkg -i /tmp/packages-microsoft-prod.deb 2>&1 \
+    && rm -rf /tmp/packages-microsoft-prod.deb 2>&1 \
+    && apt-get update 2>&1 \
+    && add-apt-repository universe 2>&1 \
+    && apt-get install -y powershell 2>&1 \
     #
     # Upgrade
     && apt-get upgrade 2>&1 \
