@@ -2,7 +2,7 @@ FROM ubuntu:focal
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN sed -i -e 's/http:\/\/archive\.ubuntu\.com\/ubuntu\//http:\/\/ubuntu.mirrors.tds.net\/pub\/ubuntu\//' /etc/apt/sources.list \
+RUN sed -i -e 's/http:\/\/archive\.ubuntu\.com\/ubuntu\//http:\/\/us\.archive\.ubuntu\.com\/ubuntu\//' /etc/apt/sources.list \
     && apt-get update 2>&1 \
     && apt-get -y install --no-install-recommends \
     apt-utils \
@@ -35,11 +35,11 @@ RUN sed -i -e 's/http:\/\/archive\.ubuntu\.com\/ubuntu\//http:\/\/ubuntu.mirrors
     && apt-get install -y \
     python3 \
     python3-pip 2>&1 \
-    && ln -s /usr/bin/python3 /usr/bin/python \
-    && ln -s /usr/bin/pip3 /usr/bin/pip \
+    && ln -sf /usr/bin/python3 /usr/bin/python \
+    && ln -sf /usr/bin/pip3 /usr/bin/pip \
     #
-    # Install OpenJDK 14
-    && apt-get install -y openjdk-14-jdk 2>&1 \
+    # Install OpenJDK 17
+    && apt-get install -y openjdk-17-jdk 2>&1 \
     #
     # Install Gradle 6.8.3
     && curl -o gradle.zip https://downloads.gradle-dn.com/distributions/gradle-6.8.3-all.zip 2>&1 \
