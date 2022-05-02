@@ -25,10 +25,10 @@ RUN sed -i -e 's/http:\/\/archive\.ubuntu\.com\/ubuntu\//http:\/\/us\.archive\.u
     && add-apt-repository ppa:git-core/ppa 2>&1 \
     && apt-get install -y git 2>&1 \
     #
-    # Install Node.js 14.16.0 with nvm
+    # Install Node.js with nvm
     && curl -so- https://raw.githubusercontent.com/creationix/nvm/v0.37.2/install.sh | bash 2>&1 \
     && /bin/bash -c "source $HOME/.nvm/nvm.sh \
-    && nvm install 14.16.0 \
+    && nvm install 16.14.2 \
     && npm install -g npm npm-check-updates" 2>&1 \
     #
     # Install python3
@@ -38,20 +38,20 @@ RUN sed -i -e 's/http:\/\/archive\.ubuntu\.com\/ubuntu\//http:\/\/us\.archive\.u
     && ln -sf /usr/bin/python3 /usr/bin/python \
     && ln -sf /usr/bin/pip3 /usr/bin/pip \
     #
-    # Install OpenJDK 17
+    # Install OpenJDK
     && apt-get install -y openjdk-17-jdk 2>&1 \
     #
-    # Install Gradle 6.8.3
+    # Install Gradle
     && curl -o gradle.zip https://downloads.gradle-dn.com/distributions/gradle-6.8.3-all.zip 2>&1 \
     && mkdir /opt/gradle 2>&1 \
     && unzip -qq -d /opt/gradle gradle.zip 2>&1 \
     && rm gradle.zip 2>&1 \
     #
-    # Install .NET 5.0
+    # Install .NET
     && curl -sSL https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -o /tmp/packages-microsoft-prod.deb 2>&1 \
     && dpkg -i /tmp/packages-microsoft-prod.deb 2>&1 \
     && apt-get update 2>&1 \
-    && apt-get install -y dotnet-sdk-5.0 2>&1 \
+    && apt-get install -y dotnet-sdk-6.0 2>&1 \
     && rm -rf /tmp/packages-microsoft-prod.deb 2>&1 \
     #
     # Install Docker CE CLI
