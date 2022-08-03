@@ -28,7 +28,7 @@ RUN sed -i -e 's/http:\/\/archive\.ubuntu\.com\/ubuntu\//http:\/\/us\.archive\.u
     # Install Node.js with nvm
     && curl -so- https://raw.githubusercontent.com/creationix/nvm/v0.37.2/install.sh | bash 2>&1 \
     && /bin/bash -c "source $HOME/.nvm/nvm.sh \
-    && nvm install 16.14.2 \
+    && nvm install 16.16.0 \
     && npm install -g npm npm-check-updates" 2>&1 \
     #
     # Install python3

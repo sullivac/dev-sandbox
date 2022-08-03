@@ -1,10 +1,10 @@
 Import-Module -Name DockerCompletion
 Import-Module -Name posh-git
 
-$env:JAVA_HOME = "/usr/lib/jvm/java-11-openjdk-amd64"
+$env:JAVA_HOME = "/usr/lib/jvm/java-17-openjdk-amd64"
 
 $paths = @(
-    '/root/.nvm/versions/node/v14.16.0/bin',
+    '/root/.nvm/versions/node/v16.16.0/bin',
     '/opt/gradle/gradle-6.8.3/bin'
 ) -join ':'
 
