@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -7,77 +7,79 @@ RUN sed -i -e 's/http:\/\/archive\.ubuntu\.com\/ubuntu\//http:\/\/us\.archive\.u
     && apt-get -y install --no-install-recommends \
     apt-utils \
     dialog 2>&1 \
-    && apt-get install -y ca-certificates 2>&1 \
-    && apt-get install -y apt-transport-https 2>&1 \
+    && apt-get install -y \
+    ca-certificates \
+    apt-transport-https 2>&1 \
     && apt-get update 2>&1 \
     && apt-get install -y \
     curl \
+    gnupg \
     gnupg-agent \
-    liblttng-ust0 \
     lsb-release \
     procps \
     sed \
     software-properties-common \
     unzip 2>&1 \
-    && apt-get upgrade -y 2>&1 \
-    #
-    # Update Git
-    && add-apt-repository ppa:git-core/ppa 2>&1 \
-    && apt-get install -y git 2>&1 \
-    #
-    # Install Node.js with nvm
-    && curl -so- https://raw.githubusercontent.com/creationix/nvm/v0.37.2/install.sh | bash 2>&1 \
+    && apt-get upgrade -y 2>&1
+
+#
+# Update Git
+RUN add-apt-repository ppa:git-core/ppa 2>&1 \
+    && apt-get install -y git 2>&1
+#
+# Install Node.js with nvm
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash 2>&1 \
     && /bin/bash -c "source $HOME/.nvm/nvm.sh \
-    && nvm install 18.12.1 \
-    && npm install -g npm npm-check-updates" 2>&1 \
-    #
-    # Install python3
-    && apt-get install -y \
+    && nvm install 18.18.0 \
+    && npm install -g npm npm-check-updates" 2>&1
+#
+# Install python3
+RUN apt-get install -y \
     python3 \
     python3-pip 2>&1 \
     && ln -sf /usr/bin/python3 /usr/bin/python \
-    && ln -sf /usr/bin/pip3 /usr/bin/pip \
-    #
-    # Install OpenJDK
-    && apt-get install -y openjdk-17-jdk 2>&1 \
-    #
-    # Install Gradle
-    && curl -o gradle.zip https://downloads.gradle-dn.com/distributions/gradle-6.8.3-all.zip 2>&1 \
+    && ln -sf /usr/bin/pip3 /usr/bin/pip
+#
+# Install OpenJDK
+RUN apt-get install -y openjdk-17-jdk 2>&1
+#
+# Install Gradle
+RUN curl -o gradle.zip https://downloads.gradle.org/distributions/gradle-8.3-all.zip 2>&1 \
     && mkdir /opt/gradle 2>&1 \
     && unzip -qq -d /opt/gradle gradle.zip 2>&1 \
-    && rm gradle.zip 2>&1 \
+    && rm gradle.zip 2>&1
+#
+# Install Docker CE CLI
+RUN install -m 0755 -d /etc/apt/keyrings 2>&1 \
+    && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg 2>&1 \
+    && chmod a+r /etc/apt/keyrings/docker.gpg 2>&1 \
+    && echo "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null \
+    && apt-get update 2>&1 \
+    && apt-get install -y docker-ce-cli 2>&1
+#
+# Install kubectl
+RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" 2>&1 \
+    && chmod +x ./kubectl 2>&1 \
+    && mv ./kubectl /usr/local/bin 2>&1
+#
+# Install Microsoft Package Dependencies
+RUN curl -sSL https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -o /tmp/packages-microsoft-prod.deb 2>&1 \
+    && dpkg -i /tmp/packages-microsoft-prod.deb 2>&1 \
+    && apt-get update 2>&1 \
+    && rm -rf /tmp/packages-microsoft-prod.deb 2>&1 \
     #
     # Install .NET
-    && curl -sSL https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -o /tmp/packages-microsoft-prod.deb 2>&1 \
-    && dpkg -i /tmp/packages-microsoft-prod.deb 2>&1 \
-    && apt-get update 2>&1 \
     && apt-get install -y dotnet-sdk-6.0 2>&1 \
-    && rm -rf /tmp/packages-microsoft-prod.deb 2>&1 \
-    #
-    # Install Docker CE CLI
-    && curl -fsSL https://download.docker.com/linux/$(lsb_release -is | tr '[:upper:]' '[:lower:]')/gpg | apt-key add - 2>/dev/null \
-    && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/$(lsb_release -is | tr '[:upper:]' '[:lower:]') $(lsb_release -cs) stable" 2>&1 \
-    && apt-get update 2>&1 \
-    && apt-get install -y docker-ce-cli 2>&1 \
-    #
-    # Install kubectl
-    && curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" 2>&1 \
-    && chmod +x ./kubectl 2>&1 \
-    && mv ./kubectl /usr/local/bin 2>&1 \
     #
     # Install PowerShell
-    && curl -sSL -o /tmp/packages-microsoft-prod.deb https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb 2>&1 \
-    && dpkg -i /tmp/packages-microsoft-prod.deb 2>&1 \
-    && rm -rf /tmp/packages-microsoft-prod.deb 2>&1 \
-    && apt-get update 2>&1 \
     && add-apt-repository universe 2>&1 \
-    && apt-get install -y powershell 2>&1 \
-    #
-    # Upgrade
-    && apt-get upgrade 2>&1 \
-    #
-    # Clean up
-    && apt-get autoremove -y 2>&1 \
+    && apt-get install -y powershell 2>&1
+#
+# Upgrade
+RUN apt-get upgrade 2>&1
+#
+# Clean up
+RUN apt-get autoremove -y 2>&1 \
     && apt-get clean -y 2>&1 \
     && rm -rf /var/lib/apt/lists/* 2>&1
 

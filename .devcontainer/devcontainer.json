@@ -2,13 +2,10 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.101.0/containers/docker-existing-dockerfile
 {
 	"name": "dev-sandbox",
-
 	"dockerFile": "Dockerfile",
-
 	"remoteEnv": {
 		"SYNC_LOCALHOST_KUBECONFIG": "true"
 	},
-
 	"mounts": [
 		"source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
 		"type=volume,source=dev-sandbox-extensions,destination=/root/.vscode-server/extensions",
@@ -16,29 +13,35 @@
 		"type=volume,source=dev-sandbox-google-apis,destination=/root/.googleapis",
 		"type=bind,source=${localEnv:HOME}/.kube,target=/root/.kube-localhost",
 	],
-
 	"workspaceFolder": "/workspaces",
-
 	"workspaceMount": "type=volume,source=dev-sandbox-remote,destination=/workspaces",
-
-	"settings": {
-		"terminal.integrated.shell.linux": "/usr/bin/pwsh"
-	},
-
-	"extensions": [
-		"ms-dotnettools.csharp",
-		"ms-azuretools.vscode-docker",
-		"kishoreithadi.dotnet-core-essentials",
-		"eamodio.gitlens",
-		"ryu1kn.partial-diff",
-		"ms-vscode.powershell",
-		"numso.prettier-standard-vscode",
-		"humao.rest-client",
-		"stkb.rewrap",
-		"chenxsan.vscode-standardjs",
-		"vscode-icons-team.vscode-icons",
-		"redhat.vscode-yaml",
-		"dotjoshjohnson.xml",
-		"ms-kubernetes-tools.vscode-kubernetes-tools"
-	]
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "pwsh",
+				"terminal.integrated.profiles.linux": {
+					"pwsh": {
+						"path": "/usr/bin/pwsh",
+						"icon": "terminal-powershell"
+					}
+				}
+			},
+			"extensions": [
+				"ms-dotnettools.csharp",
+				"ms-azuretools.vscode-docker",
+				"kishoreithadi.dotnet-core-essentials",
+				"eamodio.gitlens",
+				"ryu1kn.partial-diff",
+				"ms-vscode.powershell",
+				"numso.prettier-standard-vscode",
+				"humao.rest-client",
+				"stkb.rewrap",
+				"chenxsan.vscode-standardjs",
+				"vscode-icons-team.vscode-icons",
+				"redhat.vscode-yaml",
+				"dotjoshjohnson.xml",
+				"ms-kubernetes-tools.vscode-kubernetes-tools"
+			]
+		}
+	}
 }
